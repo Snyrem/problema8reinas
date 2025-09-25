@@ -1,8 +1,9 @@
-// Obtenemos el tablero del HTML
+
 const tablero = document.getElementById('tablero');
 
-// Ruta de la imagen de la reina
 const imagenReina = "img/reina.jpg";
+
+let contadorReinas = 0;
 
 // Generamos las 8 filas y 8 columnas del tablero
 for (let fila = 0; fila < 8; fila++) {
@@ -14,36 +15,35 @@ for (let fila = 0; fila < 8; fila++) {
     const esClara = (fila + columna) % 2 === 0;
     casilla.dataset.color = esClara ? 'clara' : 'oscura';
 
-    // Accesibilidad
     casilla.setAttribute('role', 'gridcell');
     casilla.setAttribute('tabindex', '0');
 
-    // Guardamos la posición de la casilla
     casilla.dataset.fila = fila;
     casilla.dataset.columna = columna;
 
     // Evento al hacer clic en la casilla
-    casilla.addEventListener('click', () => {
-      if (casilla.querySelector('img.reina')) {
-        casilla.innerHTML = '';
-      } else {
-        const img = document.createElement('img');
-        img.className = 'reina';
-        img.alt = 'Reina';
-        img.src = imagenReina;
-        casilla.appendChild(img);
-      }
-    });
+casilla.addEventListener('click', () => {
 
-    // Permitir usar Enter o Espacio como clic
-    casilla.addEventListener('keydown', (evento) => {
-      if (evento.key === 'Enter' || evento.key === ' ') {
-        evento.preventDefault();
-        casilla.click();
-      }
-    });
+  if (casilla.querySelector('img.reina')) {
+    alert("⚠️ Ya hay una reina en esta casilla.");
+    return;
+  }
 
-    // Añadimos la casilla al tablero
+  if (contadorReinas >= 8) {
+    alert("⚠️ No puedes colocar más de 8 reinas.");
+    return;
+  }
+
+  // Colocar una nueva reina
+  const img = document.createElement('img');
+  img.className = 'reina';
+  img.alt = 'Reina';
+  img.src = imagenReina;
+  casilla.appendChild(img);
+
+  contadorReinas++; 
+});
+
     tablero.appendChild(casilla);
   }
 }
@@ -53,4 +53,6 @@ document.getElementById('btnLimpiar').addEventListener('click', limpiarTablero);
 
 function limpiarTablero() {
   document.querySelectorAll('.casilla').forEach(casilla => casilla.innerHTML = '');
+  contadorReinas = 0; 
 }
+
