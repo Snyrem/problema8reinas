@@ -25,12 +25,12 @@ for (let fila = 0; fila < 8; fila++) {
 casilla.addEventListener('click', () => {
 
   if (casilla.querySelector('img.reina')) {
-    alert("⚠️ Ya hay una reina en esta casilla.");
+    alert("Ya hay una reina en esta casilla.");
     return;
   }
 
   if (contadorReinas >= 8) {
-    alert("⚠️ No puedes colocar más de 8 reinas.");
+    alert("No puedes colocar más de 8 reinas.");
     return;
   }
 
